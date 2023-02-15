@@ -13,7 +13,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Constants.primaryColor.withOpacity(0.75),
+      backgroundColor: Constants.primaryColor,
       body: ListView(
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics()),
@@ -120,11 +120,11 @@ Widget profile(){
 Widget about(){
   return Card(
     elevation: 80.0,
-    color: Constants.secondaryColor,
+    color: Constants.textColor,
     child: const ListTile(
       title: Text('About Me',
       style: TextStyle(fontWeight: FontWeight.bold,
-      fontSize: 20, color: Colors.amber),
+      fontSize: 20, color: Colors.blueGrey),
       ),
       subtitle: Padding(
         padding: EdgeInsets.only(top: 10),
@@ -136,7 +136,7 @@ Widget about(){
             ,style: TextStyle(
           fontWeight: FontWeight.w300,
           fontSize: 17,
-              color: Colors.white,
+              color: Colors.black45,
               letterSpacing: 1)
         ),
       ),
@@ -166,17 +166,17 @@ Widget hobby(){
 Widget socmed(){
   return Card(
     elevation: 80.0,
-    color: Constants.thirdColor,
+    color: Constants.textColor,
     child: const ListTile(
       title: Text('Social Media',
         style: TextStyle(fontWeight: FontWeight.bold,
-            fontSize: 20, color: Colors.white),
+            fontSize: 20, color: Colors.blueGrey),
       ),
       subtitle: Text("Twitter: Giya1908                                  Instagram: Giash.ii                                                    Facebook: Gia Sumagang",
           style: TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 17,
-              color: Colors.white,
+              color: Colors.black45,
               letterSpacing: 1)),
     ),
   );

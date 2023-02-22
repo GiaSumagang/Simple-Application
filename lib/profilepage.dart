@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:profile/constants.dart';
+import 'package:profile/detail.dart';
+import 'package:profile/about.dart';
+import 'package:profile/hobbies.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -9,6 +12,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  int _selectedIndex = 0; // keep track of the selected tab
+
+  static const List<Widget> _widgetOptions = <Widget>[    Text('Profile Page'),    Text('Favorites'),    Text('Settings'),  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index; // update the selected tab index
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -17,22 +30,40 @@ class _ProfilePageState extends State<ProfilePage> {
       body: ListView(
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics()),
-        children: [coverImage(), profile(), about(), hobby(), socmed()],
-        ),
+        children: [coverImage(), profile(), about(context), hobby(context), socmed(context)],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex, // pass in the selected tab index
+        onTap: _onItemTapped, // handle tab selection
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorites',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
+      ),
     );
   }
 }
 
 Widget coverImage(){
   return Container(
-    height: 180,
+      height: 180,
       decoration: BoxDecoration(
-        color: Constants.primaryColor.withOpacity(.1),
-        image: const DecorationImage(
+          color: Constants.primaryColor.withOpacity(.1),
+          image: const DecorationImage(
             fit: BoxFit.cover,
             image: AssetImage('assets/images/cover.jpg'),
-      )
-  ));
+          )
+      ));
 }
 
 Widget profile(){
@@ -117,67 +148,77 @@ Widget profile(){
   );
 }
 
-Widget about(){
-  return Card(
-    elevation: 80.0,
-    color: Constants.textColor,
+Widget about(BuildContext context) {
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+        backgroundColor: Constants.textColor
+    ),
+    onPressed: () async {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const About()),
+      );
+    },
     child: const ListTile(
-      title: Text('About Me',
-      style: TextStyle(fontWeight: FontWeight.bold,
-      fontSize: 20, color: Colors.blueGrey),
-      ),
-      subtitle: Padding(
-        padding: EdgeInsets.only(top: 10),
-        child: Text('Hi, I am Gia C. Sumagang.'
-        'I am 20 years old, and I live in Sta. Elena, Iligan City. '
-        'I am the youngest in my family, and I only have one sibling; her name is Keren Kezia C. Sumagang.'
-        'I am also a student here at USTP Cagayan de Oro, majoring in information technology. '
-        'My thoughts about this course are that it is really difficult; you need to be good at logic, and since there is a never-ending programming language, you cannot just focus on one language.'
-            ,style: TextStyle(
-          fontWeight: FontWeight.w300,
-          fontSize: 17,
-              color: Colors.black45,
-              letterSpacing: 1)
+        title: Text(
+          'About Me',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: Colors.blueGrey,
+          ),
         ),
-      ),
+        subtitle: Text('Click to see more..')
     ),
   );
 }
 
-Widget hobby(){
-  return Card(
-    elevation: 80.0,
-    color: Constants.textColor,
-    child: const ListTile(
-      title: Text('My Hobbies',
-        style: TextStyle(fontWeight: FontWeight.bold,
-            fontSize: 20, color: Colors.blueGrey),
-      ),
-      subtitle: Text('- Watching Movies,                                                         - Discovering New Music,                                                - Playing Video Games                                                         - Arts',
-          style: TextStyle(
-          fontWeight: FontWeight.w300,
-          fontSize: 17,
-          color: Colors.black45,
-          letterSpacing: 1),
+Widget hobby(BuildContext context) {
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+        backgroundColor: Constants.textColor
     ),
-  ));
+    onPressed: () async {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Hobbies()),
+      );
+    },
+    child: const ListTile(
+      title: Text(
+        'My Hobbies',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+          color: Colors.blueGrey,
+        ),
+      ),
+      subtitle: Text('Click to see more..'),
+    ),
+  );
 }
 
-Widget socmed(){
-  return Card(
-    elevation: 80.0,
-    color: Constants.textColor,
+Widget socmed(BuildContext context) {
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Constants.textColor
+    ),
+    onPressed: () async {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Details()),
+      );
+    },
     child: const ListTile(
-      title: Text('Social Media',
-        style: TextStyle(fontWeight: FontWeight.bold,
-            fontSize: 20, color: Colors.blueGrey),
+      title: Text(
+        'Social Medias',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+          color: Colors.blueGrey,
+        ),
       ),
-      subtitle: Text("Twitter: Giya1908                                  Instagram: Giash.ii                                                    Facebook: Gia Sumagang",
-          style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 17,
-              color: Colors.black45,
-              letterSpacing: 1)),
+      subtitle: Text('Click to see more..')
     ),
   );
 }

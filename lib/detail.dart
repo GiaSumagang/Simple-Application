@@ -1,19 +1,37 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:profile/constants.dart';
 
-class Details extends StatefulWidget {
-  const Details({Key? key}) : super(key: key);
+class Details extends StatelessWidget {
+  final List<String> platforms = [
+    'Facebook',
+    'Twitter',
+    'Instagram',
+    'LinkedIn',
+    'WhatsApp'
+  ];
 
-  @override
-  State<Details> createState() => _DetailsState();
-}
+   Details({super.key});
 
-class _DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Social Media Platforms'),
+        backgroundColor: Constants.primaryColor,
+      ),
+      body: ListView.builder(
+        itemCount: platforms.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: ListTile(
+              leading: const Icon(Icons.account_circle),
+              title: Text(platforms[index]),
+              onTap: () {
 
+              },
+            ),
+          );
+        },
       ),
     );
   }

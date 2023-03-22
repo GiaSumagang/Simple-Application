@@ -16,7 +16,7 @@ class Hobbies extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Hobbies'),
+        title: const Text('My Hobbies'),
         backgroundColor: Constants.primaryColor,
       ),
       body: HobbiesListView(hobbies: hobbies),

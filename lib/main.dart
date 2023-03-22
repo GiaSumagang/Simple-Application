@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
-import 'profilepage.dart';
+import 'package:profile/screens/main_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main (){
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-      primarySwatch: Colors.blue,
-    ),
-    title: 'sample',
-    home: const ProfilePage(),
-  ));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget{
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MainPage(),
+    );
+  }
 }

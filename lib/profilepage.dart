@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:profile/constants.dart';
 import 'package:profile/detail.dart';
 import 'package:profile/about.dart';
 import 'package:profile/hobbies.dart';
+import 'package:flutter/material.dart';
+
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -14,7 +16,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   int _selectedIndex = 0; // keep track of the selected tab
 
-  static const List<Widget> _widgetOptions = <Widget>[    Text('Profile Page'),    Text('Favorites'),    Text('Settings'),  ];
+  static  List<Widget> _widgetOptions = <Widget>[    Text('Profile Page'),    Text('Favorites'),    Text('Settings'),  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -22,33 +24,31 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Constants.primaryColor,
-      body: ListView(
-        physics: const BouncingScrollPhysics(
-          parent: AlwaysScrollableScrollPhysics()),
-        children: [coverImage(), profile(), about(context), hobby(context), socmed(context)],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex, // pass in the selected tab index
-        onTap: _onItemTapped, // handle tab selection
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorites',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+      appBar: AppBar(
+        backgroundColor: Constants.primaryColor,
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
+            child: Text("Log Out", style: TextStyle(color: Colors.white)),
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<CircleBorder>(
+                CircleBorder(side: BorderSide(color: Colors.white)),
+              ),
+            ),
           ),
         ],
+      ),
+      body: ListView(
+        children: [coverImage(), profile(), about(context), hobby(context), socmed(context)],
       ),
     );
   }

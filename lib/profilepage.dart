@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,6 +29,11 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   final user = FirebaseAuth.instance.currentUser!;
+
+  GlobalKey<FormState> key=GlobalKey();
+
+  CollectionReference _reference=FirebaseFirestore.instance.collection('info-displayer');
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,24 +75,43 @@ Widget coverImage(){
       ));
 }
 
+String? imageUrl;
+
 Widget profile(){
   return Container(
-    transform: Matrix4.translationValues(0.0, -40.0, 0.0),
-    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: -0),
-    child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.end,
+      transform: Matrix4.translationValues(0.0, -40.0, 0.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: -0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
           IconButton(
             iconSize: 100,
             icon: const Icon(Icons.camera_alt_outlined),
-            onPressed: () {
+            onPressed: () async {
               ImagePicker imagePicker=ImagePicker();
-              imagePicker.pickImage(source: ImageSource.camera);
-            },
-          ),
+              XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
+              print('${file?.path}');
+
+                if(file==null) return;
+
+              String uniqueFileName=DateTime.now().millisecondsSinceEpoch.toString();
+
+              Reference referenceRoot=FirebaseStorage.instance.ref();
+              Reference referenceDirImages=referenceRoot.child('images');
+              Reference referenceImageToUpload=referenceDirImages.child(uniqueFileName);
+
+          try{
+            await referenceImageToUpload.putFile(File(file.path));
+            imageUrl = await referenceImageToUpload.getDownloadURL();
+          } catch(error) {
+            print(error);
+          }
+        },
+      ),
           Text(
             "BSIT-R31",
             style: TextStyle(

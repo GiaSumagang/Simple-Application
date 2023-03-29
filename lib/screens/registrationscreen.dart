@@ -14,6 +14,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmpasswordController = TextEditingController();
   final _usernameController = TextEditingController();
 
   @override
@@ -115,7 +116,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 Padding(padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextField(
-                    controller: _passwordController,
+                    controller: _confirmpasswordController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),

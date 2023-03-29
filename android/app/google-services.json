@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "623231178047",
+    "project_id": "info-displayer",
+    "storage_bucket": "info-displayer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623231178047:android:10cc10b31a8913d6e8af8a",
+        "android_client_info": {
+          "package_name": "com.example.profile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "623231178047-73r3abcu1236for6bid1k1gsemvkj3ba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxsDILDK46dFz1zawazcwBH_k8fhBEyow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "623231178047-73r3abcu1236for6bid1k1gsemvkj3ba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:profile/constants.dart';
 import 'package:profile/detail.dart';
 import 'package:profile/about.dart';
@@ -16,7 +18,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   int _selectedIndex = 0; // keep track of the selected tab
 
-  static  List<Widget> _widgetOptions = <Widget>[    Text('Profile Page'),    Text('Favorites'),    Text('Settings'),  ];
+  static  List<Widget> _widgetOptions = <Widget>[    const Text('Profile Page'),    const Text('Favorites'),    const Text('Settings'),  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -38,12 +40,12 @@ class _ProfilePageState extends State<ProfilePage> {
             onPressed: () {
               FirebaseAuth.instance.signOut();
             },
-            child: Text("Log Out", style: TextStyle(color: Colors.white)),
             style: ButtonStyle(
               shape: MaterialStateProperty.all<CircleBorder>(
-                CircleBorder(side: BorderSide(color: Colors.white)),
+                const CircleBorder(side: BorderSide(color: Colors.white)),
               ),
             ),
+            child: const Text("Log Out", style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -71,18 +73,19 @@ Widget profile(){
     transform: Matrix4.translationValues(0.0, -40.0, 0.0),
     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: -0),
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start, children: [
+        crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const CircleAvatar(
-              backgroundColor: Colors.black12,
-              radius: 50,
-              child: CircleAvatar(
-                radius: 47,
-                backgroundImage: AssetImage('assets/images/gia.jpg'),
-              )),
+          IconButton(
+            iconSize: 100,
+            icon: const Icon(Icons.camera_alt_outlined),
+            onPressed: () {
+              ImagePicker imagePicker=ImagePicker();
+              imagePicker.pickImage(source: ImageSource.camera);
+            },
+          ),
           Text(
             "BSIT-R31",
             style: TextStyle(

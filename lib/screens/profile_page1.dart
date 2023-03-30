@@ -8,14 +8,14 @@ import 'package:profile/hobbies.dart';
 import 'package:flutter/material.dart';
 
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class ProfilePage1 extends StatefulWidget {
+  const ProfilePage1({Key? key}) : super(key: key);
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfilePage1> createState() => _ProfilePage1State();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePage1State extends State<ProfilePage1> {
   int _selectedIndex = 0; // keep track of the selected tab
 
   static  List<Widget> _widgetOptions = <Widget>[    const Text('Profile Page'),    const Text('Favorites'),    const Text('Settings'),  ];
@@ -51,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             child: const Icon(Icons.exit_to_app,
-            color: Colors.white),
+                color: Colors.white),
           ),
         ],
       ),
@@ -69,9 +69,9 @@ Widget coverImage(){
           color: Constants.primaryColor.withOpacity(.1),
           image: const DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage('assets/images/cover.jpg'),
+            image: AssetImage(''),
           )
-      ));
+));
 }
 
 String? imageUrl;
@@ -98,7 +98,7 @@ Widget profile(){
                 ),
               ),
 
-          Text(
+              Text(
                 "BSIT-R31",
                 style: TextStyle(
                     color: Constants.textColor,

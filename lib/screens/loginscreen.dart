@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.phone_android_outlined,
+                const Icon(Icons.lock,
                 size: 100),
                  Text(
                     'Hello Again!',
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.deepPurple),
+                      borderSide: BorderSide(color: Colors.black),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     hintText: 'Email',
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.deepPurple),
+                        borderSide: BorderSide(color: Colors.black),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Password',
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.deepPurple,
+                        color: Colors.black,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Center(
@@ -139,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: const Text(
                             ' Register Now',
                             style: TextStyle(
-                              color: Colors.blue,
+                              color: Colors.deepPurple,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

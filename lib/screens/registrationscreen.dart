@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,23 +13,48 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
 
-  final _emailController = TextEditingController();
+  final _EmailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmpasswordController = TextEditingController();
-  final _usernameController = TextEditingController();
+  final _AddressController = TextEditingController();
+  final _FullNameController = TextEditingController();
+  final _AgeController = TextEditingController();
+  final _SectionController = TextEditingController();
 
   @override
   void dispose(){
-    _emailController.dispose();
+    _EmailController.dispose();
     _passwordController.dispose();
+    _AgeController.dispose();
+    _AddressController.dispose();
+    _FullNameController.dispose();
+    _SectionController.dispose();
     super.dispose();
   }
 
   Future signUp() async {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text.trim(),
+        email: _EmailController.text.trim(),
         password: _passwordController.text.trim()
     );
+
+    addUserDetails(
+      _FullNameController.text.trim(),
+      _SectionController.text.trim(),
+      int.parse(_AgeController.text.trim()),
+      _AddressController.text.trim(),
+      _EmailController.text.trim(),
+    );
+  }
+
+  Future addUserDetails(String FullName, String Section, int Age, String Address, String Email)
+  async {
+    await FirebaseFirestore.instance.collection('Users').add({
+      'FullName': FullName ,
+      'Section': Section ,
+      'Age': Age ,
+      'Addres': Address,
+      'Email': Email,
+    });
   }
 
   @override
@@ -41,12 +67,16 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.person,
-                    size: 100),
                 Text(
                   'Hello! Please Register',
                   style: GoogleFonts.bebasNeue(
                     fontSize: 49,
+                  ),
+                ),
+                Text(
+                  'Register Down Below!',
+                  style: GoogleFonts.bebasNeue(
+                    fontSize: 30,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -55,17 +85,17 @@ class _RegisterPageState extends State<RegisterPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextField(
-                    controller: _usernameController,
+                    controller: _FullNameController,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderSide: BorderSide(color: Colors.black),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        hintText: 'Username',
+                        hintText: 'Full Name',
                         fillColor: Colors.grey[200],
                         filled: true
                     ),
@@ -76,14 +106,77 @@ class _RegisterPageState extends State<RegisterPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextField(
-                    controller: _emailController,
+                    controller: _SectionController,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: 'Section',
+                        fillColor: Colors.grey[200],
+                        filled: true
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: TextField(
+                    controller: _AgeController,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: 'Age',
+                        fillColor: Colors.grey[200],
+                        filled: true
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: TextField(
+                    controller: _AddressController,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: 'Address',
+                        fillColor: Colors.grey[200],
+                        filled: true
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: TextField(
+                    controller: _EmailController,
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         hintText: 'Email',
@@ -103,30 +196,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.deepPurple),
+                        borderSide: BorderSide(color: Colors.black),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       hintText: 'Password',
-                      fillColor: Colors.grey[200],
-                      filled: true,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-
-                Padding(padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: TextField(
-                    controller: _confirmpasswordController,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.deepPurple),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      hintText: 'Confirm Password',
                       fillColor: Colors.grey[200],
                       filled: true,
                     ),
@@ -141,7 +214,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.deepPurple,
+                        color: Colors.black,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Center(
@@ -176,7 +249,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: const Text(
                             ' Login Now',
                             style: TextStyle(
-                              color: Colors.blue,
+                              color: Colors.deepPurple,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
